@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+       <meta charset="UTF-8">
+
+       <title>Title</title>
+
+</head>
+
+<body>
+{% load mathfilters %}
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{%  for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+
+
+{% endfor %}
+{% with sum=0 temp=0 %}
+<i>{{ "total:" }} {{  question.choice_set.all.0.votes|mul:'1'|add:question.choice_set.all.1.votes|mul:'2'|add:question.choice_set.all.2.votes|mul:3}}</i>
+
+{% endwith %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
